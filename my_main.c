@@ -104,4 +104,68 @@ void my_main() {
   g.green = 0;
   g.blue = 0;
 
+  for (i = 0; i < lastop; i++){
+    switch (op[i].opcode){
+    case PUSH:
+      push(systems);
+      break;
+    case POP:
+      pop(systems);
+      break;
+    case MOVE:
+      tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
+      matrix_mult(peek(systems), tmp);
+      copy_matrix(tmp, peek(systems));
+      tmp->lastcol = 0;
+      break;
+    case SCALE:
+      tmp = make_scale(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
+      matrix_mult(peek(systems), tmp);
+      copy_matrix(tmp, peek(systems));
+      tmp->lastcol = 0;
+      break;
+    case ROTATE:
+      theta = op[i].op.rotate.degrees * (M_PI / 180);
+      if ( !op[i].op.rotate.axis )
+        tmp = make_rotX( theta );
+      else if ( op[i].op.rotate.axis )
+        tmp = make_rotY( theta );
+      else
+        tmp = make_rotZ( theta );
+      matrix_mult(peek(systems), tmp);
+      copy_matrix(tmp, peek(systems));
+      tmp->lastcol = 0;
+      break;
+    case BOX:
+      add_box(tmp, op[i].op.box.d0[0], op[i].op.box.d0[1], op[i].op.box.d0[2], op[i].op.box.d1[0], op[i].op.box.d1[1], op[i].op.box.d1[2]);
+      matrix_mult(peek(systems), tmp);
+      draw_polygons(tmp, t, zb, view, light, ambient, areflect, dreflect, sreflect);
+      tmp->lastcol = 0;
+      break;
+    case SPHERE:
+      add_sphere(tmp, op[i].op.sphere.d[0], op[i].op.sphere.d[1], op[i].op.sphere.d[2], op[i].op.sphere.r, step_3d);
+      matrix_mult(peek(systems), tmp);
+      draw_polygons(tmp, t, zb, view, light, ambient, areflect, dreflect, sreflect);
+      tmp->lastcol = 0;
+      break;
+    case TORUS:
+      add_torus(tmp, op[i].op.torus.d[0], op[i].op.torus.d[1], op[i].op.torus.d[2], op[i].op.torus.r0, op[i].op.torus.r1, step_3d);
+      matrix_mult(peek(systems), tmp);
+      draw_polygons(tmp, t, zb, view, light, ambient, areflect, dreflect, sreflect);
+      tmp->lastcol = 0;
+      break;
+    case LINE:
+      add_edge(tmp, op[i].op.line.p0[0],op[i].op.line.p0[1], op[i].op.line.p0[2], op[i].op.line.p1[0], op[i].op.line.p1[1], op[i].op.line.p1[2]);
+      matrix_mult(peek(systems), tmp);
+      draw_lines(tmp, t, zb, g);
+      tmp->lastcol = 0;
+      break;
+    case SAVE:
+      save_extension(t, op[i].op.save.p->name);
+      break;
+    case DISPLAY:
+      display(t);
+      break;
+    }
+  }
 }
