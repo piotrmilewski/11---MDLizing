@@ -76,17 +76,17 @@ void my_main() {
   light[LOCATION][1] = 0.75;
   light[LOCATION][2] = 1;
 
-  light[COLOR][RED] = 0;
-  light[COLOR][GREEN] = 255;
+  light[COLOR][RED] = 255;
+  light[COLOR][GREEN] = 0;
   light[COLOR][BLUE] = 255;
 
   view[0] = 0;
   view[1] = 0;
   view[2] = 1;
 
-  areflect[RED] = 0.1;
-  areflect[GREEN] = 0.1;
-  areflect[BLUE] = 0.1;
+  areflect[RED] = 0.3;
+  areflect[GREEN] = 0.3;
+  areflect[BLUE] = 0.3;
 
   dreflect[RED] = 0.5;
   dreflect[GREEN] = 0.5;

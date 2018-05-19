@@ -1,0 +1,30 @@
+//JUST MOVE IT
+push
+move 260 220 0
+rotate x 20
+rotate y -20
+//FACE, EYES, AND BALLS
+push
+box -50 -25 200 125 15 15
+box -200 150 10 115 15 15
+box -50 175 10 115 15 15
+sphere -150 50 0 30
+sphere 0 50 0 30
+sphere 100 20 0 8
+sphere 100 -10 0 8
+sphere 110 -40 0 8
+sphere 120 -70 0 8
+sphere 130 -100 0 8
+sphere 160 -100 0 8
+sphere 170 -70 0 8
+pop
+//BLING & HEAD
+push
+move 0 50 0
+rotate x 90
+torus 10 50 0 10 250
+torus 0 0 0 5 75
+torus 90 0 0 1 10
+pop
+display
+save runo.png
